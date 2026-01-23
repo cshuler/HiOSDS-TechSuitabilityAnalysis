@@ -22,12 +22,6 @@ v01
 
 ## Outputs
 
-- `mpat_v01.csv` — Master Parcel Attribute Table
-- `mpat_v01_32604.gpkg` — Spatial version (EPSG:32604)
-
-
-## Outputs
-
 - `mpat_v01.csv` — Master Parcel Attribute Table (non-spatial)
 - `mpat_v01_32604.gpkg` — Spatial MPAT (EPSG:32604)
 
