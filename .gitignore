@@ -1,4 +1,5 @@
 .vscode/
+.claude
 data/*
 !data/03_processed/
 !data/03_processed/**
@@ -6,7 +7,7 @@ data/03_processed/_archive/
 data/03_processed/_archive/**
 trash/
 notebooks/_archive/
-scripts/chris_code/
+scripts/
 environment.yml
 config.yaml
 src/hcpt/
