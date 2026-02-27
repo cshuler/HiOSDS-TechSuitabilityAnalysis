@@ -15,11 +15,13 @@ v02
 ├── notebooks/                         # Executable analysis workflows
 │ ├── 00_download_input_layers.ipynb   # Download/collect source layers 
 │ ├── 01_prepare_input_layers.ipynb    # Prepare & validate inputs 
-│ └── 02_built_mpat.ipynb              # Construct MPAT + export to CSV/GPKG
+│ ├── 02_built_mpat.ipynb              # Construct MPAT + export to CSV/GPKG
+│ └── 03_eda.ipynb                     # Conduct exploratory data analysis
 └── src/                               # Helper scripts imported by notebooks
 ├── download_input_layers.py           # Functions used by 00_download_input_layers.ipynb
 ├── prepare_input_layers.py            # Functions used by 01_prepare_input_layers.ipynb
-└── build_mpat.py                      # Functions used by 02_built_mpat.ipynb
+├── build_mpat.py                      # Functions used by 02_built_mpat.ipynb
+└── eda.py                             # Functions used by 03_eda.ipynb
 ```
 
 ## Outputs
@@ -41,7 +43,7 @@ v02
 | `bedroom_qty`                | `int`      | count            | Total bedrooms associated with OSDS/cesspools on the parcel. |
 | `building_fp_qty`            | `float`    | count            | Count of building footprint features within parcel with cesspools (if available). |
 | `parcel_area_sqft`           | `float`    | sqft             | Computed area in square feet of parcels with cesspools. |
-| `building_fp_total_area_sqft`| `float`    | sqft             | Total building footprint area per parcel with cesspools |
+| `building_fp_total_area_sqft`| `float`    | sqft             | Total building footprint area per parcel with cesspools. |
 | `net_parcel_area_sqft`       | `float`    | sqft             | Parcel area minus building footprint area (where available). |
 | `dist_to_sma_ft`             | `float`    | ft               | Distance from the parcel analysis point to the nearest SMA (0 if within SMA). |
 | `dist_to_coast_ft`           | `float`    | ft               | Distance from the parcel analysis point to the nearest coastline. |
@@ -62,9 +64,10 @@ v02
 | `climate_suitability`        | `string`   | in               | Climate suitability classification (Average rainfall in inches). |
 | `slope_req`                  | `string`   | percent (%)      | Slope requirement category/flag used for technology screening. |
 | `in_flood_zone`              | `int`      | binary (0/1)     | Parcel analysis point intersects a mapped flood zone. |
-| `in_sma`                     | `int`      | binary (0/1)     | Derived from `dist_to_sma_ft` if distance is equal to 0 (Parcel analysis point within SMA) |
+| `in_sma`                     | `int`      | binary (0/1)     | Derived from `dist_to_sma_ft` if distance is equal to 0 (Parcel analysis point within SMA). |
 | `coast_within_100_ft`        | `int`      | binary (0/1)     | Parcel analysis point is within 100 feet of coastline. |
-| `analysis_point_source`      | `string`   | —                | Centroid placement logic |
+| `stream_within_50_ft`        | `float`    | ft               | Parcel analysis point is within 50 ft of a stream. |
+| `analysis_point_source`      | `string`   | —                | Centroid placement logic. |
 | `geometry`                   | `geometry` | EPSG:32604       | GeoPackage only: parcel geometry used for spatial joins/exports (multipolygon/polygon features). |
 
 ## Reproducibility Notes
@@ -74,5 +77,6 @@ v02
   1. `00_download_input_layers.ipynb`
   2. `01_prepare_input_layers.ipynb`
   3. `02_built_mpat.ipynb`
+  4. `03_eda.ipynb`
 - The spatial output is projected to EPSG:32604 for analysis and export.
 - The CSV is intended for visualizations and non-spatial analysis; use the GeoPackage when you need geometry.
