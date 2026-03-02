@@ -31,8 +31,10 @@ Parcel-level analysis for evaluating cesspool replacement technologies in Hawai�
 
 - `data/03_processed/logic/20260301_logic.csv` — Logic model dataset (non-spatial)
 - `data/03_processed/logic/20260301_logic_32604.gpkg` — Spatial logic model dataset (EPSG:32604), layer: `logic`
+    - [`README.md`](https://github.com/cshuler/HiOSDS-TechSuitabilityAnalysis/blob/main/data/03_processed/logic/README.md) 
 - `data/03_processed/mpat/20260301_mpat.csv` — Master Parcel Attribute Table (non-spatial)
 - `data/03_processed/mpat/20260301_mpat_32604.gpkg` — Spatial MPAT (EPSG:32604), layer: `mpat`
+    - [`README.md`](https://github.com/cshuler/HiOSDS-TechSuitabilityAnalysis/blob/main/data/03_processed/mpat/README.md)
 
 ## Reproducibility Notes
 
