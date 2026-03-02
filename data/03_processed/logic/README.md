@@ -2,6 +2,9 @@
 
 Last Updated: 3/1/2026
 
+**Notes**
+- The `geometry` column exists only in the GeoPackage (`.gpkg`) output.
+
 | Variable                     | Data type  | Units            | Description |
 | ---------------------------- | ---------- | ---------------- | ----------- |
 | `tmk`                        | `int`      | —                | Tax Map Key; unique parcel identifier. |
