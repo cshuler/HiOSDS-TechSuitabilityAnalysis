@@ -29,6 +29,6 @@ Last Updated: 3/1/2026
 | `wt_elev_ft`                 | `float`    | ft               | Water table elevation sampled at the parcel analysis point. |
 | `depth_to_wt_ft`             | `float`    | ft               | Depth to groundwater. (`land_surface_elev_ft − wt_elev_ft`) |
 | `slope_pct`                  | `float`    | percent (%)      | Slope perentage at the parcel analysis point. |
-| `sfha_tf`                    | `string`   | —                | Special Flood Hazard Area. Coded as A or V flood zone area. |
+| `sfha_tf`                    | `string`   | —                | Special Flood Hazard Area (coded as A or V flood zone area) equals "T". |
 | `analysis_point_source`      | `string`   | —                | Centroid placement logic. |
 | `geometry`                   | `geometry` | EPSG:32604       | GeoPackage only: parcel geometry used for spatial joins/exports (multipolygon/polygon features). |
