@@ -1,0 +1,151 @@
+meta:
+  scenario: baseline
+  source: HCPT_Matrix_v5.3.xlsx
+  exported: '2026-03-21T00:41:18+00:00'
+  notes: Baseline regulatory config — HAR 11-62 Subchapter 3. All distances in feet,
+    areas in sqft.
+thresholds:
+  gw_min_ft:
+    value: 3
+    unit: ft
+    description: Minimum depth to groundwater — standard leach field and seepage pit
+    mpat_field: depth_to_wt_ft
+    har_source: HAR §11-62-34(a)(1)(C) and §11-62-34(d)(1)(C)
+    verify_status: CONFIRMED
+  slope_max_lf_pct:
+    value: 12
+    unit: pct
+    description: Maximum slope — standard absorption trenches and leach fields
+    mpat_field: slope_pct
+    har_source: HAR §11-62-34(a)(2)(I)
+    verify_status: VERIFY
+  slope_max_cw_pct:
+    value: 8
+    unit: pct
+    description: Maximum slope — constructed wetland eco supplement
+    mpat_field: slope_pct
+    har_source: WRRC 2025
+    verify_status: VERIFY_WITH_DOH
+  slope_seepage_trigger_pct:
+    value: 12
+    unit: pct
+    description: Slope threshold triggering seepage pit as alternative to trenches
+    mpat_field: slope_pct
+    har_source: HAR §11-62-34(d)(2)(A)(i)
+    verify_status: CONFIRMED
+  well_public_lf_ft:
+    value: 1000
+    unit: ft
+    description: Setback from public water system — soil absorption system (LF, drip)
+    mpat_field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+    notes: Public water systems only. Domestic well setback not in Table II — using
+      as conservative proxy pending DOH clarification.
+  well_public_trt_ft:
+    value: 500
+    unit: ft
+    description: Setback from public water system — treatment unit (septic tank or ATU)
+    mpat_field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+    notes: Corrected from v3.4 — 500 ft not 1,000 ft. Binding setback for combined
+      systems = max(treatment, disposal).
+  well_seepage_ft:
+    value: VERIFY
+    unit: ft
+    description: Setback from public water system — seepage pit
+    mpat_field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    har_source: HAR Appendix D Table II, July 1 2014 — seepage pit column
+    verify_status: VERIFY
+  well_bioreactor_ft:
+    value: 300
+    unit: ft
+    description: Setback from well — bioreactor garden eco supplement
+    mpat_field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    har_source: WRRC 2025
+    verify_status: VERIFY_WITH_DOH
+  coast_min_ft:
+    value: 50
+    unit: ft
+    description: Minimum distance to coastline — all soil-dispersal systems
+    mpat_field: dist_to_coast_ft
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  stream_min_ft:
+    value: 50
+    unit: ft
+    description: Minimum distance to stream — all soil-dispersal systems
+    mpat_field: dist_to_streams_ft
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  stream_nsf245_prefer_ft:
+    value: 300
+    unit: ft
+    description: Stream proximity threshold for NSF 245 preference (not exclusion)
+    mpat_field: dist_to_streams_ft
+    har_source: WRRC policy recommendation
+    verify_status: CONFIRMED
+  lot_flag_sqft:
+    value: 10000
+    unit: sqft
+    description: Net lot area flag threshold — planning proxy for standard LF feasibility
+    mpat_field: net_parcel_area_sqft
+    har_source: WRRC planning estimate
+    verify_status: PLANNING_ESTIMATE
+    notes: Fires FLAG not hard exclusion. 27% of Maui parcels below this threshold.
+  lot_cw_min_sqft:
+    value: 20000
+    unit: sqft
+    description: Minimum lot area — constructed wetland eco supplement
+    mpat_field: net_parcel_area_sqft
+    har_source: WRRC planning estimate
+    verify_status: VERIFY_WITH_DOH
+  perc_slow_flag:
+    value: 60
+    unit: min/in
+    description: Perc rate upper flag limit — standard absorption trenches
+    mpat_field: perc_est
+    mpat_derivation: perc_est = 423.33 / ksat_r
+    har_source: HAR §11-62-34(a)(1)(B)
+    verify_status: FLAG_ONLY
+    notes: FLAG not EXCLUDE — SSURGO ksat_r is regional estimate, field tests frequently
+      differ. 15.4% of Maui parcels exceed this.
+  perc_fast_pathway:
+    value: 1
+    unit: min/in
+    description: Perc rate lower threshold — triggers Soil Replacement System pathway
+    mpat_field: perc_est
+    har_source: HAR §11-62-34(f)(1)(A)(i) and (iii)
+    verify_status: CONFIRMED
+  perc_seepage_max:
+    value: 10
+    unit: min/in
+    description: Perc rate hard limit — seepage pit (weighted average must be <= this)
+    mpat_field: perc_est
+    har_source: HAR §11-62-34(d)(1)(B)
+    verify_status: CONFIRMED
+    notes: This IS a hard exclusion. 15.7% of Maui parcels meet this threshold.
+  design_flow_gpd_bed:
+    value: 200
+    unit: gpd/bedroom
+    description: Design wastewater flow per bedroom
+    mpat_field: bedroom_qty
+    har_source: HAR §11-62-34(a)(2)(A)
+    verify_status: CONFIRMED
+  sma_inside:
+    value: 0
+    unit: ft
+    description: Inside Special Management Area — dist_to_sma_ft == 0 means inside SMA
+    mpat_field: dist_to_sma_ft
+    har_source: Hawaii Office of Planning SMA boundary
+    verify_status: CONFIRMED
+    notes: 12.4% of Maui cesspool parcels in SMA.
+  sfha_flag:
+    value: T
+    unit: sfha_tf = T means in flood zone
+    description: Special Flood Hazard Area — advisory flag
+    mpat_field: sfha_tf
+    har_source: FEMA National Flood Hazard Layer
+    verify_status: ACTIVE
+    notes: 1.6% of Maui parcels. Advisory flag only — no confirmed hard HAR exclusion.

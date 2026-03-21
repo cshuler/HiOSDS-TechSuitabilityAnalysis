@@ -1,0 +1,203 @@
+meta:
+  scenario: baseline
+  source: HCPT_Matrix_v5.3.xlsx
+  exported: '2026-03-21T00:41:18+00:00'
+  notes: Baseline regulatory config — HAR 11-62 Subchapter 3. All distances in feet,
+    areas in sqft.
+endpoints:
+  E01:
+    display_name: Standard Septic Tank + Standard Leach Field
+    approval_pathway: Standard Approval
+    har_basis: HAR §11-62-33.1(a) + §11-62-34(a)
+    excludes_when:
+    - GW_MIN
+    - SLOPE_MAX_LF
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    flags_when:
+    - LOT_STD_LF
+    - PERC_FLAG_SLOW
+    - PERC_FLAG_FAST
+    - FLOOD_SFHA
+  E02:
+    display_name: Standard Septic Tank + Compact (Traffic-Rated) Leach Field
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-34(a)-(b)
+    excludes_when:
+    - GW_MIN
+    - SLOPE_MAX_LF
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    triggers_when:
+    - LOT_COMPACT_TRIGGER
+    flags_when:
+    - PERC_FLAG_SLOW
+    notes: Show only when lot too small for standard LF (Pass 2 rule).
+  E03:
+    display_name: Standard Septic Tank + Mounded Leach Field
+    approval_pathway: Case-by-Case
+    har_basis: HAR §11-62-34(e)
+    triggers_when:
+    - GW_MOUND_TRIGGER
+    excludes_when:
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    flags_when:
+    - PERC_FLAG_SLOW
+    notes: Shown ONLY when GW < 3 ft. Pass 2 hides when GW is adequate.
+  E04:
+    display_name: NSF 40 ATU + Standard Leach Field
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(a)
+    excludes_when:
+    - GW_MIN
+    - SLOPE_MAX_LF
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    - LOT_STD_LF
+    prefers_when:
+    - SMA_NSF245_PREFER
+    - STREAM_NSF245_PREFER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E05:
+    display_name: NSF 40 ATU + Compact Leach Field
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(a)-(b)
+    excludes_when:
+    - GW_MIN
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    triggers_when:
+    - LOT_COMPACT_TRIGGER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E06:
+    display_name: NSF 40 ATU + Mounded Leach Field
+    approval_pathway: Case-by-Case
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(e)
+    triggers_when:
+    - GW_MOUND_TRIGGER
+    excludes_when:
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    flags_when:
+    - PERC_FLAG_SLOW
+  E07:
+    display_name: Standard Septic Tank + Seepage Pit
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-34(d)
+    triggers_when:
+    - SLOPE_SEEPAGE_TRIGGER
+    excludes_when:
+    - GW_MIN_SEEPAGE
+    - PERC_SEEPAGE_MAX
+    - WELL_SEEPAGE
+    - COAST_MIN
+    - STREAM_MIN
+    prefers_when:
+    - SMA_NSF245_PREFER
+  E08:
+    display_name: NSF 245 ATU + Standard Leach Field
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(a)
+    excludes_when:
+    - GW_MIN
+    - SLOPE_MAX_LF
+    - WELL_STD
+    - LOT_STD_LF
+    - COAST_MIN
+    - STREAM_MIN
+    prefers_when:
+    - SMA_NSF245_PREFER
+    - STREAM_NSF245_PREFER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E09:
+    display_name: NSF 245 ATU + Compact Leach Field
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(a)-(b)
+    excludes_when:
+    - GW_MIN
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    triggers_when:
+    - LOT_COMPACT_TRIGGER
+    prefers_when:
+    - SMA_NSF245_PREFER
+    - STREAM_NSF245_PREFER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E10:
+    display_name: NSF 245 ATU + Mounded Leach Field
+    approval_pathway: Case-by-Case
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(e)
+    triggers_when:
+    - GW_MOUND_TRIGGER
+    excludes_when:
+    - WELL_STD
+    - COAST_MIN
+    - STREAM_MIN
+    prefers_when:
+    - SMA_NSF245_PREFER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E11:
+    display_name: NSF 245 ATU + Subsurface Drip Irrigation
+    approval_pathway: Conditional
+    har_basis: HAR §11-62-33.1(b)
+    excludes_when:
+    - WELL_ATU_DRIP
+    - COAST_MIN
+    - STREAM_MIN
+    prefers_when:
+    - SMA_NSF245_PREFER
+    - STREAM_NSF245_PREFER
+    flags_when:
+    - PERC_FLAG_SLOW
+  E12:
+    display_name: NSF 245 ATU + Seepage Pit
+    approval_pathway: Case-by-Case
+    har_basis: HAR §11-62-33.1(b) + §11-62-34(d)
+    triggers_when:
+    - SLOPE_SEEPAGE_TRIGGER
+    excludes_when:
+    - GW_MIN_SEEPAGE
+    - PERC_SEEPAGE_MAX
+    - WELL_SEEPAGE
+    - COAST_MIN
+    - STREAM_MIN
+    prefers_when:
+    - SMA_NSF245_PREFER
+    - STREAM_NSF245_PREFER
+  E13:
+    display_name: Composting or Incinerating Toilet (dry system)
+    approval_pathway: Last Resort
+    har_basis: HAR §11-62-35; Experimental/Limited DOH status
+    pass2_rule: last_resort
+    notes: No soil dispersal — groundwater, well, coast, stream criteria are N/A.
+      Show only when no other endpoint passes.
+  ES1:
+    display_name: Bioreactor Garden (eco supplement)
+    approval_pathway: Experimental
+    har_basis: WRRC 2025
+    excludes_when:
+    - WELL_BIOREACTOR
+    - COAST_MIN
+    - STREAM_MIN
+  ES2:
+    display_name: Constructed Wetland (eco supplement)
+    approval_pathway: Experimental
+    har_basis: WRRC 2025
+    excludes_when:
+    - LOT_CW_MIN
+    - SLOPE_MAX_CW
+    - COAST_MIN
+    - STREAM_MIN

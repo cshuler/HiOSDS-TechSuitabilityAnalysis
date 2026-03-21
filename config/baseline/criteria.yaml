@@ -1,0 +1,196 @@
+meta:
+  scenario: baseline
+  source: HCPT_Matrix_v5.3.xlsx
+  exported: '2026-03-21T00:41:18+00:00'
+  notes: Baseline regulatory config — HAR 11-62 Subchapter 3. All distances in feet,
+    areas in sqft.
+criteria:
+  GW_MIN:
+    field: depth_to_wt_ft
+    operator: '>='
+    threshold: gw_min_ft
+    default_action: excludes_when
+    description: Minimum depth to groundwater — standard leach field
+    har_source: HAR §11-62-34(a)(1)(C)
+    verify_status: CONFIRMED
+  GW_MOUND_TRIGGER:
+    field: depth_to_wt_ft
+    operator: '<'
+    threshold: gw_min_ft
+    default_action: triggers_when
+    description: Shallow GW — mounded systems shown only when this is true
+    har_source: HAR §11-62-33.1(b)(5) + §11-62-34(e)
+    verify_status: CONFIRMED
+    notes: Same threshold as GW_MIN, opposite operator. Pass 2 hides mounded systems
+      when NOT triggered.
+  GW_MIN_SEEPAGE:
+    field: depth_to_wt_ft
+    operator: '>='
+    threshold: gw_min_ft
+    default_action: excludes_when
+    description: Minimum depth to groundwater — seepage pit (same 3 ft threshold)
+    har_source: HAR §11-62-34(d)(1)(C)
+    verify_status: CONFIRMED
+  SLOPE_MAX_LF:
+    field: slope_pct
+    operator: '<='
+    threshold: slope_max_lf_pct
+    default_action: excludes_when
+    description: Maximum slope for standard leach fields
+    har_source: HAR §11-62-34(a)(2)(I)
+    verify_status: VERIFY
+  SLOPE_SEEPAGE_TRIGGER:
+    field: slope_pct
+    operator: '>'
+    threshold: slope_seepage_trigger_pct
+    default_action: triggers_when
+    description: Steep slope — seepage pit shown only when slope > 12%
+    har_source: HAR §11-62-34(d)(2)(A)(i)
+    verify_status: CONFIRMED
+  SLOPE_MAX_CW:
+    field: slope_pct
+    operator: '<='
+    threshold: slope_max_cw_pct
+    default_action: excludes_when
+    description: Maximum slope — constructed wetland
+    har_source: WRRC 2025
+    verify_status: VERIFY_WITH_DOH
+  WELL_STD:
+    field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    mpat_derived: df[['dist_to_mun_well_ft','dist_to_dom_well_ft']].min(axis=1)
+    operator: '>='
+    threshold: well_public_lf_ft
+    default_action: excludes_when
+    description: Well setback — leach field and drip disposal (1,000 ft)
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  WELL_PUBLIC_TRT:
+    field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    mpat_derived: df[['dist_to_mun_well_ft','dist_to_dom_well_ft']].min(axis=1)
+    operator: '>='
+    threshold: well_public_trt_ft
+    default_action: excludes_when
+    description: Well setback — treatment unit only (500 ft)
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  WELL_SEEPAGE:
+    field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    mpat_derived: df[['dist_to_mun_well_ft','dist_to_dom_well_ft']].min(axis=1)
+    operator: '>='
+    threshold: well_seepage_ft
+    default_action: excludes_when
+    verify_status: VERIFY
+  WELL_ATU_DRIP:
+    field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    mpat_derived: df[['dist_to_mun_well_ft','dist_to_dom_well_ft']].min(axis=1)
+    operator: '>='
+    threshold: well_public_trt_ft
+    default_action: excludes_when
+    description: 'ATU + drip: 100 ft minimum (VERIFY — may differ from LF setback)'
+    verify_status: VERIFY
+  WELL_BIOREACTOR:
+    field: min(dist_to_mun_well_ft, dist_to_dom_well_ft)
+    mpat_derived: df[['dist_to_mun_well_ft','dist_to_dom_well_ft']].min(axis=1)
+    operator: '>='
+    threshold: well_bioreactor_ft
+    default_action: excludes_when
+    verify_status: VERIFY_WITH_DOH
+  COAST_MIN:
+    field: dist_to_coast_ft
+    operator: '>='
+    threshold: coast_min_ft
+    default_action: excludes_when
+    description: Minimum distance to coastline
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  STREAM_MIN:
+    field: dist_to_streams_ft
+    operator: '>='
+    threshold: stream_min_ft
+    default_action: excludes_when
+    description: Minimum distance to stream
+    har_source: HAR Appendix D Table II, July 1 2014
+    verify_status: CONFIRMED
+  STREAM_NSF245_PREFER:
+    field: dist_to_streams_ft
+    operator: '<'
+    threshold: stream_nsf245_prefer_ft
+    default_action: prefers_when
+    description: Near stream — NSF 245 preferred over NSF 40
+    har_source: WRRC policy recommendation
+    verify_status: CONFIRMED
+  SMA_NSF245_PREFER:
+    field: dist_to_sma_ft
+    operator: '=='
+    threshold: sma_inside
+    default_action: prefers_when
+    description: Inside SMA — NSF 245 preferred
+    har_source: Hawaii SMA rules; WRRC policy
+    verify_status: CONFIRMED
+  SMA_STD_CONDITIONAL:
+    field: dist_to_sma_ft
+    operator: '=='
+    threshold: sma_inside
+    default_action: excludes_when
+    description: Inside SMA — standard septic conditional (within 50 ft of shoreline excluded)
+    har_source: Hawaii SMA rules
+    verify_status: VERIFY
+  LOT_STD_LF:
+    field: net_parcel_area_sqft
+    operator: '>='
+    threshold: lot_flag_sqft
+    default_action: flags_when
+    description: Lot size planning flag — may be too small for standard LF
+    har_source: WRRC planning estimate
+    verify_status: PLANNING_ESTIMATE
+    notes: FLAG only — not a hard exclusion. 27% of Maui parcels below threshold.
+  LOT_COMPACT_TRIGGER:
+    field: net_parcel_area_sqft
+    operator: '<'
+    threshold: lot_flag_sqft
+    default_action: triggers_when
+    description: Small lot — triggers compact LF and ATU options
+    verify_status: PLANNING_ESTIMATE
+  LOT_CW_MIN:
+    field: net_parcel_area_sqft
+    operator: '>='
+    threshold: lot_cw_min_sqft
+    default_action: excludes_when
+    description: Minimum lot size — constructed wetland
+    verify_status: VERIFY_WITH_DOH
+  PERC_FLAG_SLOW:
+    field: perc_est
+    mpat_derived: 423.33 / ksat_r
+    operator: '<='
+    threshold: perc_slow_flag
+    default_action: flags_when
+    description: Soil perc upper flag limit — standard absorption trenches
+    har_source: HAR §11-62-34(a)(1)(B)
+    verify_status: FLAG_ONLY
+  PERC_FLAG_FAST:
+    field: perc_est
+    mpat_derived: 423.33 / ksat_r
+    operator: '>='
+    threshold: perc_fast_pathway
+    default_action: flags_when
+    description: Very fast soil — Soil Replacement pathway
+    har_source: HAR §11-62-34(f)(1)(A)(i)
+    verify_status: CONFIRMED
+  PERC_SEEPAGE_MAX:
+    field: perc_est
+    mpat_derived: 423.33 / ksat_r
+    operator: '<='
+    threshold: perc_seepage_max
+    default_action: excludes_when
+    description: Hard perc limit — seepage pit (only hard perc screen in the matrix)
+    har_source: HAR §11-62-34(d)(1)(B)
+    verify_status: CONFIRMED
+  FLOOD_SFHA:
+    field: sfha_tf
+    operator: '=='
+    threshold: sfha_flag
+    default_action: flags_when
+    description: In SFHA flood zone — advisory flag
+    har_source: FEMA NFHL; HAR §11-62-31.2
+    verify_status: ACTIVE
+    notes: FLAG only. No confirmed hard HAR exclusion. 1.6% of Maui parcels.

@@ -1,0 +1,14 @@
+scenario: baseline
+exported: '2026-03-21T00:41:18+00:00'
+source: HCPT_Matrix_v5.3.xlsx
+counts:
+  thresholds: 19
+  criteria: 23
+  endpoints: 15
+checksums:
+  thresholds.yaml: 6120008ffb
+  criteria.yaml: d575816dc8
+  endpoint_rules.yaml: 7ee7082914
+notes: Baseline config generated from HCPT_Matrix_v5.3.xlsx. VERIFY items require
+  DOH confirmation before production use. All distances in feet, areas in sqft, consistent
+  with HAR 11-62 and MPAT field names.
